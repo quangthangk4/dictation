@@ -13,7 +13,7 @@ export default async function AttemptsPage({ params }: { params: { id: string } 
   }
 
   const splitRegex = /(?<=[.!?])\s+/;
-  const targetSentences = dictation.content.split(splitRegex).map(s => s.trim()).filter(Boolean);
+  const targetSentences = dictation.content.split(splitRegex).map((s: string) => s.trim()).filter(Boolean);
 
   const renderEvaluatedText = (userInputs: string[]) => {
     return targetSentences.map((targetSentence, index) => {

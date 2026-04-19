@@ -19,7 +19,7 @@ export default async function DictationPage({ params }: { params: { id: string }
   }
 
   const splitRegex = /(?<=[.!?])\s+/;
-  const sentences = dictation.content.split(splitRegex).map(s => s.trim()).filter(Boolean);
+  const sentences = dictation.content.split(splitRegex).map((s: string) => s.trim()).filter(Boolean);
 
   return (
     <div className="max-w-4xl mx-auto animate-in fade-in slide-in-from-bottom-4 duration-700 mt-6 lg:mt-10">
