@@ -21,6 +21,34 @@ export default function PracticeClient({ dictationId, sentences }: PracticeClien
 
   const isFinished = currentIndex >= sentences.length
   
+  useEffect(() => {
+    const handleGlobalKeyDown = (e: KeyboardEvent) => {
+      // Toggle Play/Pause with Ctrl
+      if (e.key === 'Control') {
+        const audio = document.querySelector('audio')
+        if (audio) {
+          if (audio.paused) {
+            audio.play()
+          } else {
+            audio.pause()
+          }
+        }
+      }
+      // Rewind 3 seconds and Play with Alt
+      if (e.key === 'Alt') {
+        e.preventDefault()
+        const audio = document.querySelector('audio')
+        if (audio) {
+          audio.currentTime = Math.max(0, audio.currentTime - 3)
+          audio.play()
+        }
+      }
+    }
+
+    window.addEventListener('keydown', handleGlobalKeyDown)
+    return () => window.removeEventListener('keydown', handleGlobalKeyDown)
+  }, [])
+
   const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
     if (e.key === 'Enter' && !e.shiftKey) {
       e.preventDefault()
