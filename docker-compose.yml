@@ -1,0 +1,24 @@
+services:
+  postgres:
+    image: postgres:15
+    container_name: dictation_db
+
+    environment:
+      POSTGRES_DB: dictation
+      POSTGRES_USER: dictation
+      POSTGRES_PASSWORD: dictation
+
+    ports:
+      - "5555:5432"
+
+    volumes:
+      - dictation_data:/var/lib/postgresql
+
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U dictation -d dictation" ]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+
+volumes:
+  dictation_data:

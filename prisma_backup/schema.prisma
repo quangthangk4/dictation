@@ -1,0 +1,25 @@
+datasource db {
+  provider = "postgresql"
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model Dictation {
+  id        String             @id @default(uuid())
+  title     String
+  content   String             @db.Text
+  createdAt DateTime           @default(now())
+  updatedAt DateTime           @updatedAt
+  attempts  DictationAttempt[]
+}
+
+model DictationAttempt {
+  id          String   @id @default(uuid())
+  dictationId String
+  userInput   Json     // This will store an array of typed sentences
+  createdAt   DateTime @default(now())
+  
+  dictation Dictation @relation(fields: [dictationId], references: [id], onDelete: Cascade)
+}

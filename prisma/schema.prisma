@@ -1,0 +1,47 @@
+datasource db {
+  provider = "postgresql"
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model Book {
+  id        String   @id @default(uuid())
+  title     String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  tests     Test[]
+}
+
+model Test {
+  id        String   @id @default(uuid())
+  title     String
+  bookId    String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  book      Book     @relation(fields: [bookId], references: [id], onDelete: Cascade)
+  dictations Dictation[]
+}
+
+model Dictation {
+  id        String             @id @default(uuid())
+  title     String
+  content   String             @db.Text
+  audioUrl  String?            @db.Text
+  testId    String
+  createdAt DateTime           @default(now())
+  updatedAt DateTime           @updatedAt
+  
+  test      Test               @relation(fields: [testId], references: [id], onDelete: Cascade)
+  attempts  DictationAttempt[]
+}
+
+model DictationAttempt {
+  id          String   @id @default(uuid())
+  dictationId String
+  userInput   Json
+  createdAt   DateTime @default(now())
+  
+  dictation Dictation @relation(fields: [dictationId], references: [id], onDelete: Cascade)
+}
