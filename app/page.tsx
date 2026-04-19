@@ -37,7 +37,7 @@ export default async function Home() {
         </div>
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {books.map((book) => {
+          {books.map((book: any) => {
             const totalTests = book.tests.length
             const totalDictations = book.tests.reduce((acc, test) => acc + test._count.dictations, 0)
             

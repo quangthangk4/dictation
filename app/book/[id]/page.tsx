@@ -51,7 +51,7 @@ export default async function BookPage({ params }: { params: { id: string } }) {
         </div>
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {book.tests.map((test) => (
+          {book.tests.map((test: any) => (
             <div
               key={test.id} 
               className="group glass-panel rounded-3xl hover:shadow-xl hover:border-blue-300 transition-all flex flex-col h-full hover:-translate-y-1 relative overflow-hidden"

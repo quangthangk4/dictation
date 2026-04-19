@@ -64,7 +64,7 @@ export default async function AttemptsPage({ params }: { params: { id: string } 
         </div>
       ) : (
         <div className="space-y-12">
-          {attempts.map((attempt, index) => {
+          {attempts.map((attempt: any, index: number) => {
             const dateStr = new Date(attempt.createdAt).toLocaleString(undefined, { dateStyle: 'medium', timeStyle: 'short' })
             const userInputs = attempt.userInput as string[]
             
@@ -101,7 +101,7 @@ export default async function AttemptsPage({ params }: { params: { id: string } 
                     </div>
                     <div className="bg-white p-6 rounded-2xl border border-indigo-100 shadow-sm">
                       <div className="leading-relaxed">
-                        {targetSentences.map((ts, idx) => (
+                        {targetSentences.map((ts: string, idx: number) => (
                           <React.Fragment key={idx}>
                             <RenderEvaluatedWords targetSentence={ts} userSentence={userInputs[idx] || ''} size="sm" />
                             {' '}
