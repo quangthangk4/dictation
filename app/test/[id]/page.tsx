@@ -46,39 +46,38 @@ export default async function TestPage({ params }: { params: { id: string } }) {
           </Link>
         </div>
       ) : (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {test.dictations.map((dictation: any) => (
+        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-3 md:gap-4">
+          {test.dictations.map((dictation: any, index: number) => (
              <div
                key={dictation.id} 
-               className="group glass-panel rounded-3xl hover:shadow-xl hover:border-blue-300 transition-all flex flex-col h-full hover:-translate-y-1 relative overflow-hidden"
+               className="group bg-white/70 hover:bg-white border border-slate-200/60 hover:border-blue-300 rounded-2xl shadow-sm hover:shadow-md transition-all flex flex-col items-center justify-center p-4 relative min-h-[100px]"
              >
-               <div className="absolute top-0 inset-x-0 h-1 bg-gradient-to-r from-blue-400 to-indigo-500 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+               <Link href={`/dictation/${dictation.id}`} className="absolute inset-0 z-10"></Link>
                
-               <div className="p-8 flex flex-col flex-1 relative z-20">
-                 <Link href={`/dictation/${dictation.id}`} className="block">
-                   <h3 className="text-2xl font-bold mb-3 text-slate-800 hover:text-blue-600 transition-colors leading-tight">{dictation.title}</h3>
-                 </Link>
-                 <p className="text-slate-500 text-base line-clamp-3 mb-6 flex-1 leading-relaxed">
-                   {dictation.content}
-                 </p>
+               {/* Center content */}
+               <div className="flex flex-col items-center z-20 pointer-events-none w-full">
+                 <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1">
+                   Câu {index + 1}
+                 </span>
+                 <h3 className="text-base md:text-lg font-black text-slate-800 text-center truncate w-full px-1">{dictation.title}</h3>
                  
-                 <div className="flex justify-between items-center text-sm font-semibold pt-6 border-t border-slate-100 mt-auto">
-                   <Link href={`/dictation/${dictation.id}`} className="text-blue-600 hover:text-blue-800 flex items-center gap-1 bg-blue-50 hover:bg-blue-100 px-4 py-2 rounded-xl transition-all shadow-sm">
-                     Mở Luyện Tập <svg className="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M9 5l7 7-7 7" /></svg>
-                   </Link>
-                   
-                   <DeleteForm
-                     action={async () => {
-                       'use server'
-                       await deleteDictation(dictation.id, test.id)
-                     }}
-                     message="Bạn chắc chắn XOÁ vĩnh viễn bài luyện tập này chứ?"
-                   >
-                     <button type="submit" className="text-slate-300 hover:text-red-500 hover:bg-red-50 p-2.5 rounded-xl transition-colors cursor-pointer flex items-center justify-center" title="Delete Dictation">
-                       <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" /></svg>
-                     </button>
-                   </DeleteForm>
-                 </div>
+                 {/* Decorative underline on hover */}
+                 <div className="h-0.5 w-6 bg-blue-500 rounded-full mt-2 opacity-0 group-hover:opacity-100 transition-all scale-0 group-hover:scale-100"></div>
+               </div>
+               
+               {/* Delete X Button (Top Right) */}
+               <div className="absolute top-1.5 right-1.5 z-30 opacity-0 group-hover:opacity-100 transition-opacity">
+                 <DeleteForm
+                   action={async () => {
+                     'use server'
+                     await deleteDictation(dictation.id, test.id)
+                   }}
+                   message={`Bạn chắc chắn muốn XOÁ câu luyện tập "${dictation.title}" chứ?`}
+                 >
+                   <button type="submit" className="text-slate-300 hover:text-red-600 hover:bg-red-50 p-1.5 rounded-lg transition-colors cursor-pointer flex items-center justify-center" title="Delete Dictation">
+                     <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M6 18L18 6M6 6l12 12" /></svg>
+                   </button>
+                 </DeleteForm>
                </div>
              </div>
           ))}

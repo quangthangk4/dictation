@@ -65,7 +65,9 @@ export async function getTestById(id: string) {
     where: { id },
     include: { 
       book: true,
-      dictations: true 
+      dictations: {
+        orderBy: { createdAt: 'asc' }
+      }
     }
   })
 }
