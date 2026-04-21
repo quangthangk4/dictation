@@ -50,19 +50,16 @@ export default async function TestPage({ params }: { params: { id: string } }) {
           {test.dictations.map((dictation: any, index: number) => (
              <div
                key={dictation.id} 
-               className="group bg-white/70 hover:bg-white border border-slate-200/60 hover:border-blue-300 rounded-2xl shadow-sm hover:shadow-md transition-all flex flex-col items-center justify-center p-4 relative min-h-[100px]"
+               className="group bg-white/70 hover:bg-white border border-slate-200/60 hover:border-blue-300 rounded-2xl shadow-sm hover:shadow-md transition-all flex flex-col items-center justify-center p-3 relative min-h-[70px]"
              >
                <Link href={`/dictation/${dictation.id}`} className="absolute inset-0 z-10"></Link>
                
                {/* Center content */}
                <div className="flex flex-col items-center z-20 pointer-events-none w-full">
-                 <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1">
-                   Câu {index + 1}
-                 </span>
-                 <h3 className="text-base md:text-lg font-black text-slate-800 text-center truncate w-full px-1">{dictation.title}</h3>
+                 <h3 className="text-base font-bold text-slate-800 text-center truncate w-full px-1">{dictation.title}</h3>
                  
                  {/* Decorative underline on hover */}
-                 <div className="h-0.5 w-6 bg-blue-500 rounded-full mt-2 opacity-0 group-hover:opacity-100 transition-all scale-0 group-hover:scale-100"></div>
+                 <div className="h-0.5 w-6 bg-blue-500 rounded-full mt-1.5 opacity-0 group-hover:opacity-100 transition-all scale-0 group-hover:scale-100"></div>
                </div>
                
                {/* Delete X Button (Top Right) */}

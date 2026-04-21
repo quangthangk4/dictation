@@ -12,8 +12,19 @@ export default async function AttemptsPage({ params }: { params: { id: string } 
     return <div>Dictation not found</div>
   }
 
-  const splitRegex = /(?<=[.!?])\s+/;
-  const targetSentences = dictation.content.split(splitRegex).map((s: string) => s.trim()).filter(Boolean);
+  const rawSegments = dictation.content.split(/(?<=[.!?])\s+/);
+  const splits = rawSegments.reduce((acc: string[], curr: string) => {
+    if (acc.length > 0) {
+      const prev = acc[acc.length - 1];
+      if (/(?:Mr|Mrs|Ms|Dr|Prof|St|Inc|Ltd|Jr|Sr)\.$/i.test(prev)) {
+        acc[acc.length - 1] = prev + ' ' + curr;
+        return acc;
+      }
+    }
+    acc.push(curr);
+    return acc;
+  }, [] as string[]);
+  const targetSentences = splits.map((s: string) => s.trim()).filter(Boolean);
 
   const renderEvaluatedText = (userInputs: string[]) => {
     return targetSentences.map((targetSentence: string, index: number) => {

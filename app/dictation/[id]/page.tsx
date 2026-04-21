@@ -18,8 +18,19 @@ export default async function DictationPage({ params }: { params: { id: string }
     )
   }
 
-  const splitRegex = /(?<=[.!?])\s+/;
-  const sentences = dictation.content.split(splitRegex).map((s: string) => s.trim()).filter(Boolean);
+  const rawSegments = dictation.content.split(/(?<=[.!?])\s+/);
+  const splits = rawSegments.reduce((acc: string[], curr: string) => {
+    if (acc.length > 0) {
+      const prev = acc[acc.length - 1];
+      if (/(?:Mr|Mrs|Ms|Dr|Prof|St|Inc|Ltd|Jr|Sr)\.$/i.test(prev)) {
+        acc[acc.length - 1] = prev + ' ' + curr;
+        return acc;
+      }
+    }
+    acc.push(curr);
+    return acc;
+  }, [] as string[]);
+  const sentences = splits.map((s: string) => s.trim()).filter(Boolean);
 
   return (
     <div className="max-w-4xl mx-auto animate-in fade-in slide-in-from-bottom-4 duration-700 mt-6 lg:mt-10">
